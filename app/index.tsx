@@ -18,6 +18,7 @@ import TaskInput from "../components/TaskInput";
 import TaskList from "../components/TaskList";
 import Controls from "../components/Controls";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Haptics from "expo-haptics";
 
 const bgLight = require("../assets/images/bg/bg-mobile-light.jpg");
 const bgDark = require("../assets/images/bg/bg-mobile-dark.jpg");
@@ -40,12 +41,16 @@ export default function App() {
   const deleteTask = useMutation(api.tasks.removeTask);
 
   const handleAdd = useCallback(async () => {
-    if (!text.trim()) return;
+     if (!text.trim()) {
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    return;
+  }
     try {
       await createTask({ text: text.trim() });
       setText("");
     } catch (e) {
       console.warn("create failed", e);
+         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     }
   }, [text, createTask]);
 
