@@ -72,7 +72,7 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView className="flex-1 flex-col items-center justify-center bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light font-josefin min-h-screen h-full pt-0 pb-12">
+    <SafeAreaView className="flex-1 flex-col items-center justify-center bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light font-josefin text-lg min-h-screen h-full pt-0 pb-12">
       <ImageBackground
         source={currentBg}
         resizeMode="cover"
@@ -99,27 +99,19 @@ export default function App() {
             value={text}
             onChangeText={setText}
             placeholder="Create a new todo..."
-            className="h-10 text-sm text-text-dark dark:text-text-light placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark  rounded-lg bg-transparent outline-none placeholder:font-josefin caret-blue-500 flex-1"
+            style={{ fontFamily: "josefin_400" }}
+            className="h-10 text-text-dark dark:text-text-light placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark  rounded-lg bg-transparent outline-none placeholder:font-josefin caret-blue-500 flex-1"
             returnKeyType="done"
             onSubmitEditing={handleAdd}
           />
         </View>
       </ImageBackground>
 
-      <SafeAreaView
-        className="flex-1 flex-col -mt-20 px-6 h-max"
-        // style={{
-        //   shadowColor: "#000",
-        //   shadowOffset: { width: 0, height: 2 },
-        //   shadowOpacity: 0.08,
-        //   shadowRadius: 4,
-        //   elevation: 2,
-        // }}
-      >
+      <View className="flex-1 flex-col -mt-20 px-6 h-max">
         <FlatList
           data={listData}
           keyExtractor={(item) => item._id}
-          className="rounded-t-xl shadow-lg h-fit"
+          className="rounded-t-xl shadow-lg h-fit shadow-bg-dark"
           renderItem={({ item }) => (
             <View className="flex flex-row justify-between items-center gap-8 w-full bg-card-light dark:bg-card-dark p-2 border-b border-border-light dark:border-border-dark">
               <Pressable
@@ -150,7 +142,7 @@ export default function App() {
 
                 {/* Title */}
                 <Text
-                  className={`text-wrap ${
+                  className={`text-wrap font-josefin ${
                     item.isCompleted
                       ? "line-through text-strike-light dark:text-strike-dark"
                       : "text-text-dark dark:text-text-light"
@@ -173,39 +165,41 @@ export default function App() {
             </View>
           )}
         />
-        <View className="flex-row items-center justify-between gap-4 bg-card-light dark:bg-card-dark text-text-dark dark:text-text-light p-3 w-full py-6 rounded-b-xl">
-          <Text>{(activeTasks ?? []).length} left</Text>
+        <View className="flex-row items-center justify-between gap-4 bg-card-light dark:bg-card-dark p-3 w-full py-6 rounded-b-xl">
+          <Text className="font-josefin text-button-dark dark:text-button-light">
+            {(activeTasks ?? []).length} left
+          </Text>
           <Pressable onPress={handleClearCompleted}>
-            <Text>Clear Completed</Text>
+            <Text className="font-josefin text-button-dark dark:text-button-light">Clear Completed</Text>
           </Pressable>
         </View>
-      </SafeAreaView>
+      </View>
 
       {/* Controls */}
       <View className="w-full flex-col justify-between items-center gap-4 pb-4 px-6">
-        <View className="flex-row gap-8 items-center justify-center w-full bg-white dark:bg-card-dark text-text-dark dark:text-text-light p-4 rounded-xl shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]">
+        <View className="flex-row gap-8 items-center justify-center w-full bg-white dark:bg-card-dark text-text-dark dark:text-text-light p-4 rounded-xl shadow-md shadow-bg-dark">
           <Pressable onPress={() => setFilter("all")}>
-            <Text className={filter === "all" ? "opacity-100" : "opacity-50"}>
+            <Text className={`font-josefin-bold ${filter === "all" ? "text-blue opacity-100" : "text-button-dark dark:text-button-light opacity-50"}`}>
               All
             </Text>
           </Pressable>
           <Pressable onPress={() => setFilter("active")}>
             <Text
-              className={filter === "active" ? "opacity-100" : "opacity-50"}
+              className={`font-josefin-bold ${filter === "active" ? "text-blue opacity-100" : "text-button-dark dark:text-button-light opacity-50"}`}
             >
               Active
             </Text>
           </Pressable>
           <Pressable onPress={() => setFilter("completed")}>
             <Text
-              className={filter === "completed" ? "opacity-100" : "opacity-50"}
+              className={`font-josefin-bold ${filter === "completed" ? "text-blue opacity-100" : "text-button-dark dark:text-button-light opacity-50"}`}
             >
               Completed
             </Text>
           </Pressable>
         </View>
       </View>
-      <Text className="text-center text-placeholder-dark dark:text-placeholder-light">
+      <Text className="text-center font-josefin text-placeholder-dark dark:text-placeholder-light mt-6">
         Drag and drop to reorder list
       </Text>
     </SafeAreaView>
