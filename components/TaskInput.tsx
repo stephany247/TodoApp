@@ -22,6 +22,8 @@ export default function TaskInput({
         className="h-fit text-text-dark dark:text-text-light placeholder:text-placeholder-light dark:placeholder:text-placeholder-dark rounded-lg bg-transparent outline-none placeholder:font-josefin caret-blue-500 flex-1"
         returnKeyType="done"
         onSubmitEditing={onSubmit}
+        accessibilityLabel="New todo"
+        accessibilityHint="Enter the todo text, then submit to add"
       />
     </View>
   );

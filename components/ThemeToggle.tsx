@@ -11,8 +11,18 @@ export default function ThemeToggle({
   onToggle: () => void;
 }) {
   return (
-    <Pressable onPress={onToggle}>
-      <Ionicons name={colorScheme === "dark" ? "sunny" : "moon"} size={24} color="#fff" />
+    <Pressable
+      onPress={onToggle}
+      accessibilityRole="button"
+      accessibilityLabel="Toggle theme"
+      accessibilityHint="Switch between light and dark theme"
+      accessible
+    >
+      <Ionicons
+        name={colorScheme === "dark" ? "sunny" : "moon"}
+        size={24}
+        color="#fff"
+      />
     </Pressable>
   );
 }

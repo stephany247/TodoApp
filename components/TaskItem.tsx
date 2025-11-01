@@ -17,7 +17,15 @@ export default function TaskItem({
 }) {
   return (
     <View className="flex flex-row justify-between items-center gap-8 w-full bg-card-light dark:bg-card-dark p-2 border-b border-border-light dark:border-border-dark">
-      <Pressable className="flex-1 flex-row items-center gap-2 h-12" onPress={onToggle}>
+      <Pressable
+        className="flex-1 flex-row items-center gap-2 h-12"
+        onPress={onToggle}
+        accessibilityRole="checkbox"
+        accessibilityLabel={`Todo: ${item.text}`}
+        accessibilityHint="Double tap to toggle completed"
+        accessibilityState={{ checked: item.isCompleted }}
+        accessible
+      >
         {item.isCompleted ? (
           <LinearGradient
             colors={["hsl(192 100% 67%)", "hsl(280 87% 65%)"]}
@@ -39,16 +47,28 @@ export default function TaskItem({
           <View className="w-5 h-5 rounded-full border border-border-light dark:border-border-dark" />
         )}
 
-        <Text className={`text-wrap font-josefin ${item.isCompleted ? "line-through text-strike-light dark:text-strike-dark" : "text-text-dark dark:text-text-light"}`}>
+        <Text
+          className={`text-wrap font-josefin ${item.isCompleted ? "line-through text-strike-light dark:text-strike-dark" : "text-text-dark dark:text-text-light"}`}
+        >
           {item.text}
         </Text>
       </Pressable>
 
-      <Pressable onPress={onDelete}>
+      <Pressable
+        onPress={onDelete}
+        accessibilityRole="button"
+        accessibilityLabel={`Delete todo: ${item.text}`}
+        accessibilityHint="Double tap to delete this todo"
+        accessible
+      >
         <EvilIcons
           name="close"
           size={24}
-          color={colorScheme === "dark" ? "hsla(237, 14%, 26%, 1)" : "hsla(236, 32%, 92%, 1)"}
+          color={
+            colorScheme === "dark"
+              ? "hsla(237, 14%, 26%, 1)"
+              : "hsla(236, 32%, 92%, 1)"
+          }
         />
       </Pressable>
     </View>

@@ -4,7 +4,10 @@ import { View, Text, Pressable } from "react-native";
 
 export default function EmptyList() {
   return (
-    <View className="w-full items-center py-12">
+    <View className="w-full items-center py-12"
+     accessible
+      accessibilityLabel="Empty list"
+      accessibilityHint="No todos yet">
       <Text className="font-josefin text-lg text-text-dark dark:text-text-light mb-2">
         Nothing here yet
       </Text>
