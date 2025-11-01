@@ -1,7 +1,13 @@
 // App.tsx
-import { ImageBackground, View, Text, Pressable } from "react-native";
+import {
+  ImageBackground,
+  View,
+  Text,
+  Pressable,
+  TextInput,
+} from "react-native";
 import "../global.css";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -22,6 +28,7 @@ export default function App() {
 
   const { colorScheme, toggle, isReady } = useTheme();
   const currentBg = colorScheme === "dark" ? bgDark : bgLight;
+  const inputRef = useRef<TextInput>(null);
 
   // tasks
   const tasks = useQuery(api.tasks.getAll);
@@ -74,14 +81,32 @@ export default function App() {
 
   if (!isReady) return null;
 
-  const displayed = filter === "all" ? (tasks ?? []) : filter === "active" ? (activeTasks ?? []) : (completedTasks ?? []);
-  const listData = [...(displayed ?? [])].sort((a, b) => b._creationTime - a._creationTime);
+  const displayed =
+    filter === "all"
+      ? (tasks ?? [])
+      : filter === "active"
+        ? (activeTasks ?? [])
+        : (completedTasks ?? []);
+  const listData = [...(displayed ?? [])].sort(
+    (a, b) => b._creationTime - a._creationTime
+  );
+  // compute loading across queries (simple approach)
+  const isLoading =
+    tasks === undefined ||
+    activeTasks === undefined ||
+    completedTasks === undefined;
 
   return (
     <SafeAreaView className="flex-1 flex-col items-center justify-center bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light font-josefin text-lg min-h-screen h-full pt-0 pb-12">
-      <ImageBackground source={currentBg} resizeMode="cover" className="w-full h-80 flex items-center justify-center p-6">
+      <ImageBackground
+        source={currentBg}
+        resizeMode="cover"
+        className="w-full h-80 flex items-center justify-center p-6"
+      >
         <View className="flex-row w-full justify-between items-center">
-          <Text className="text-3xl font-bold text-white tracking-[0.35em] uppercase py-2">Todo</Text>
+          <Text className="text-3xl font-bold text-white tracking-[0.35em] uppercase py-2">
+            Todo
+          </Text>
 
           <ThemeToggle colorScheme={colorScheme} onToggle={toggle} />
         </View>
@@ -89,11 +114,21 @@ export default function App() {
         <TaskInput text={text} onChange={setText} onSubmit={handleAdd} />
       </ImageBackground>
 
-      <TaskList data={listData} onToggle={toggleTask} onDelete={handleDeleteTask} colorScheme={colorScheme} activeCount={(activeTasks ?? []).length} onClearCompleted={handleClearCompleted} />
+      <TaskList
+        data={listData}
+        onToggle={toggleTask}
+        onDelete={handleDeleteTask}
+        colorScheme={colorScheme}
+        activeCount={(activeTasks ?? []).length}
+        onClearCompleted={handleClearCompleted}
+        isLoading={isLoading}
+      />
 
       <Controls filter={filter} setFilter={setFilter} />
 
-      <Text className="text-center font-josefin text-placeholder-dark dark:text-placeholder-light mt-6">Drag and drop to reorder list</Text>
+      <Text className="text-center font-josefin text-placeholder-dark dark:text-placeholder-light mt-6">
+        Drag and drop to reorder list
+      </Text>
     </SafeAreaView>
   );
 }
