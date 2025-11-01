@@ -16,8 +16,7 @@ import { api } from "@/convex/_generated/api";
 import { LinearGradient } from "expo-linear-gradient";
 import { Id } from "@/convex/_generated/dataModel";
 
-// only require web CSS on web
-if (Platform.OS === "web") require("../global.css");
+import "../global.css";
 
 const bgLight = require("../assets/images/bg/bg-mobile-light.jpg");
 const bgDark = require("../assets/images/bg/bg-mobile-dark.jpg");
@@ -47,7 +46,7 @@ export default function App() {
       <ImageBackground
         source={currentBg}
         resizeMode="cover"
-        className="w-full h-60 items-center justify-center p-6"
+        className="w-full h-80 flex items-center justify-center p-6"
       >
         <View className="flex-row w-full justify-between items-center">
           <Text className="text-3xl font-bold text-white tracking-[0.35em] uppercase mt-4 py-2">
@@ -64,7 +63,7 @@ export default function App() {
         </View>
 
         {/* Input */}
-        <View className="flex-row items-center bg-card-light dark:bg-card-dark rounded-lg p-3 mb-4 mt-6 w-full h-12">
+        <View className="flex flex-row items-center bg-card-light dark:bg-card-dark rounded-lg p-3 mb-4 mt-6 w-full">
           <View className="w-5 h-5 rounded-full border border-border-light dark:border-border-dark mr-3" />
           <TextInput
             value={text}
@@ -76,9 +75,9 @@ export default function App() {
           />
         </View>
       </ImageBackground>
-      <View className="flex flex-col gap-12 items-center mx-6 rounded-[16px]">
+      <View className="flex flex-col gap-12 items-center -mt-16 px-6 rounded-xl">
         <FlatList
-          data={tasks}
+          data={[...(tasks ?? [])].reverse()}
           renderItem={({ item }) => (
             <View className="flex flex-row justify-between items-center w-full bg-card-light dark:bg-card-dark p-2 border-b border-border-light dark:border-border-dark">
               <Pressable
@@ -90,15 +89,24 @@ export default function App() {
                     colors={["hsl(192 100% 67%)", "hsl(280 87% 65%)"]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
-                    className="w-5 h-5 rounded-full flex items-center justify-center border border-border-light dark:border-border-dark"
+                    // className="w-5 h-5 rounded-full flex items-center justify-center border border-border-light dark:border-border-dark"
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 9999, // same as rounded-full
+                      borderWidth: 1,
+                      borderColor: "rgba(255,255,255,0.3)", // or use your theme border color
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
                     <Text className="text-white text-xs">✓</Text>
                   </LinearGradient>
                 ) : (
                   <View className="w-5 h-5 rounded-full border border-border-light dark:border-border-dark" />
                 )}
-                {/* Title */}
 
+                {/* Title */}
                 <Text
                   className={`text-wrap ${
                     item.isCompleted
