@@ -1,50 +1,84 @@
-# Welcome to your Expo app 👋
+# React Native Todo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A clean, real-time Todo app built with **React Native**, **Expo**, **NativeWind**, and **Convex**.  
+It supports light/dark themes, smooth UI, and real-time updates using Convex.
 
-## Get started
+---
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## ⚙️ Setup
 
 ```bash
-npm run reset-project
+# Clone the repo
+git clone https://github.com/stephany247/TodoApp.git
+cd todo-app
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run start
+# or
+npx expo start
+```
+Scan the QR code with the Expo Go app to open it on your device.
+
+### 🗄️ Convex Setup
+
+#### Install Convex CLI
+```bash
+npm install convex
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+#### Initialize Convex
+```bash
+npx convex dev
+```
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
+🔐 Environment Variables
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Create a .env file in the project root:
 
-## Join the community
+```bash
+NEXT_PUBLIC_CONVEX_URL=https://your-project.convex.cloud
+RESEND_API_KEY=your_resend_api_key
+```
+Add schema in convex/schema.ts:
+```bash
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
 
-Join our community of developers creating universal apps.
+export default defineSchema({
+  todos: defineTable({
+    title: v.string(),
+    completed: v.boolean(),
+    createdAt: v.string(),
+  }),
+});
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Deploy Convex backend:
+```bash
+npx convex deploy
+```
+
+### 🎨 Built With
+
+- React Native (Expo) – App framework
+- NativeWind – Tailwind styling
+- Convex – Real-time backend
+- Resend – Email service (optional)
+
+
+### 🧠 Features
+
+- Real-time Todo CRUD (add, edit, delete, toggle)
+- Light/Dark theme with NativeWind
+- Responsive layout
+- Clean and minimal UI
+
+
+## 🧡 Credits
+
+Built for the HNG Internship Stage 3 Task 🧑‍💻
+Developed with ❤️ using React Native, Expo, and Convex.
