@@ -9,14 +9,23 @@ export default function TaskItem({
   onToggle,
   onDelete,
   colorScheme,
+  onLongPress,
+  dragging,
 }: {
   item: any;
   onToggle: () => void;
   onDelete: () => void;
   colorScheme?: string;
+  onLongPress?: () => void;
+  dragging?: boolean;
 }) {
+  const dragBg = colorScheme === "dark" ? "#1f2937" : "#eef2ff"; // dark/light
+  const dragIcon = colorScheme === "dark" ? "#9ca3af" : "#374151";
   return (
-    <View className="flex flex-row justify-between items-center gap-8 w-full bg-card-light dark:bg-card-dark p-2 border-b border-border-light dark:border-border-dark">
+    <View
+      className="flex flex-row justify-between items-center gap-8 w-full bg-card-light dark:bg-card-dark p-2 border-b border-border-light dark:border-border-dark"
+      style={dragging && { backgroundColor: dragBg  }}
+    >
       <Pressable
         className="flex-1 flex-row items-center gap-2 h-12"
         onPress={onToggle}
@@ -25,6 +34,8 @@ export default function TaskItem({
         accessibilityHint="Double tap to toggle completed"
         accessibilityState={{ checked: item.isCompleted }}
         accessible
+        onLongPress={onLongPress}
+        style={dragging ? { opacity: 0.8 } : null}
       >
         {item.isCompleted ? (
           <LinearGradient

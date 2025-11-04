@@ -12,7 +12,7 @@ export default function TaskInput({
   onSubmit: () => void;
 }) {
   return (
-    <View className="flex flex-row items-center bg-card-light dark:bg-card-dark rounded-lg p-3 mb-4 mt-6 w-full">
+    <View className="flex flex-row items-center bg-card-light dark:bg-card-dark rounded-lg px-3 py-2 mb-4 mt-6 w-full">
       <View className="w-5 h-5 rounded-full border border-border-light dark:border-border-dark mr-3" />
       <TextInput
         value={text}

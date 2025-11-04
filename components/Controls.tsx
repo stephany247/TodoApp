@@ -10,7 +10,7 @@ export default function Controls({
   setFilter: (v: "all" | "active" | "completed") => void;
 }) {
   return (
-    <View className="w-full flex-col justify-between items-center gap-4 pb-4 px-6 mt-6">
+    <View className="w-full flex-col justify-between items-center gap-4 pb-4 px-6 mt-24">
       <View
         className="flex-row gap-8 items-center justify-center w-full bg-white dark:bg-card-dark text-text-dark dark:text-text-light p-4 rounded-xl shadow-md shadow-bg-dark"
         accessibilityRole="tablist"
